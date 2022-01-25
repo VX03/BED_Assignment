@@ -5,9 +5,8 @@
 <script>
   const baseUrl = "http://localhost:3004";
   const token = localStorage.getItem("token");
-  const Loggeduser = parseInt(localStorage.getItem("Loggeduser"));
-  if(token === null || isNaN(Loggeduser)){
-    window.location.href = "/login/"
+  const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID)"));
+  if(token === null || isNaN(loggedInUserID)){
   }
 </script>
 <header>

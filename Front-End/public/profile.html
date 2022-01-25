@@ -5,20 +5,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script>
-  $(document).ready(function(){
-
-    $("#update").click(function(){
-      var tmpUName =$('#username').val();
-      var tmpEmail =$('#email').val();
-      var tmpRole =$('#role').val();
-      var tmpTokrn = localStorage.getItem('token');
-
-      var date ="{\"username\":\""+tmpUName+"\", \"email\":\""+tmpEmail+"\", \"role\":\""+tmpRole+"\", \"password\":\""+tmpPwd+"\"}"; 
-      
-    })
-  })
-</script>
 <header>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
