@@ -3,6 +3,7 @@
 //name:Vernell Lim Xi
 
 var mysql=require('mysql');
+var data=require("./config")
 
 var dbConnect={
 
@@ -10,8 +11,8 @@ var dbConnect={
         var conn=mysql.createConnection({
             host:"localhost",
             user:"root",
-            password:"S9805100g!",
-            database:"assignment2"
+            password:data.default.password,
+            database:data.default.database
 
         }
 
