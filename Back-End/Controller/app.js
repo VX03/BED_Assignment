@@ -12,6 +12,10 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = require("../config.js"); 
 var app=express();
 
+const cors = require("cors");
+app.use(cors());
+
+
 var bodyParser=require('body-parser');
 var urlencodedParser=bodyParser.urlencoded({extended:false});
 
