@@ -10,8 +10,8 @@ var dbConnect = {
 		var conn = mysql.createConnection({
 			host: "localhost",
 			user: "root",
-			password: data.default.password,
-			database: data.default.database,
+			password: data.password,
+			database: data.database,
 		});
 
 		return conn;
