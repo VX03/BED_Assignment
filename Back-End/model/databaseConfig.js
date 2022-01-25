@@ -10,8 +10,8 @@ var dbConnect={
         var conn=mysql.createConnection({
             host:"localhost",
             user:"root",
-            password:"usesql",
-            database:"sp-it"
+            password:"S9805100g!",
+            database:"assignment2"
 
         }
 
