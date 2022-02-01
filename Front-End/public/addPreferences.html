@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+  const baseUrl = "http://localhost:8081";
+  const token = localStorage.getItem("token");
+  const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID)"));
+  if(token === null || isNaN(loggedInUserID)){
+  }
+</script>
+
+<header>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">SP-IT</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="\home\">Home</a></li>
+        <li><a href="\login\">Login</a></li>
+        <li><a href="#">Promotion</a></li>
+        <li><a href="#">Page 3</a></li>
+      </ul>
+    </div> 
+</nav>
+    </header>
+<body>
+  <div style="padding:20px" id="preferences">
+    <form class="container" id="form-addPreferences" style="border:1px solid black;padding:20px">
+      <h1>Add Category Preferences:</h1>
+      <div id="add"></div>
+      <button type="submit" class="btn btn-primary" >Submit</button>
+    </form>
+  </div>
+
+  <div style="padding:20px" id="product">
+    <form class="container" id="form-addProduct" style="border:1px solid black;padding:20px">
+        <h1>Add Product:</h1>
+        <div id="add"></div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+  </div>
+  
+  <div style="padding:20px" id="category">
+    <form class="container" id="form-addCategory" style="border:1px solid black;padding:20px">
+        <h1>Add Category:</h1>
+        <div id="add"></div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+  </div>
+  
+</body>
+    
+
+</html>
