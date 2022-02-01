@@ -1,8 +1,11 @@
 <!DOCTYPE html>
+<head>
+   
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+</head>
 <header>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -10,13 +13,54 @@
         <a class="navbar-brand" href="#">SP-IT</a>
       </div>
       <ul class="nav navbar-nav">
-        <li><a href="#">Profile</a></li>
-        <li class="active"><a href="#">Product</a></li>
-        <li><a href="#">Promotion</a></li>
-        <li><a href="#">User Interest</a></li>
+        <li class="active"><a href="/home/">Home</a></li>
+        <li><a href="/login/">Login</a></li>
       </ul>
+    </div>
+</nav>
     </header>
 
-    </div>
-  </nav>
+    <body>
+
+      <div id="category-form" class="container">
+
+          <div class="row">
+ 
+            <div class="dropdown col-sm-1" style="padding: 40px;">
+                <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Category
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="#">HTML</a></li>
+                  <li><a href="#">CSS</a></li>
+                  <li><a href="#">JavaScript</a></li>
+                </ul>
+              </div>
+
+
+              
+              <div class="dropdown col-sm-1" style="padding: 40px;">
+                <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Product
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="#">HTML</a></li>
+                  <li><a href="#">CSS</a></li>
+                  <li><a href="#">JavaScript</a></li>
+                </ul>
+              </div>
+
+              <div id="search" class="d-flex justify-content-end row" style="margin-left:800px;margin-top: 40px;margin-right: 200px;">
+                <div style="padding-bottom: 10px;">
+                  <input type="text" class="form-control" id="search" placeholder="Search">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+   
+            </div>
+        
+        </div>
+
+       
+    </body>
+
 </html>
