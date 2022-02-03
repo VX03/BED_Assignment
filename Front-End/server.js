@@ -12,8 +12,8 @@ app.get("/login/", (req, res) => {
   });
 
  //get home
- app.get("/addPreferences/", (req, res) => {
-    res.sendFile("/public/addPreferences.html", { root: __dirname });
+ app.get("/addItems/", (req, res) => {
+    res.sendFile("/public/add.html", { root: __dirname });
   });
 
   const PORT = 3001;

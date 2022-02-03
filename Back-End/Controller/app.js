@@ -300,9 +300,6 @@ app.get("/product/:id/reviews",(req,res,next)=>{
 app.post('/interest/:userid',isLoggedInMiddleware,  function (req, res) {
     var role=req.decodedToken.role
     console.log("decoded role is"+role)
-    if(role!="Admin"||role!="Customer"){
-      res.send("invalid user interest")
-    }
     
     var userid = req.params.userid;
     var categoryids =req.body.categoryids;

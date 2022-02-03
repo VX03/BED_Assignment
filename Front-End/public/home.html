@@ -14,7 +14,8 @@
       </div>
       <ul class="nav navbar-nav">
         <li class="active"><a href="/home/">Home</a></li>
-        <li><a href="/login/">Login</a></li>
+        <li id="login"></li>
+        <li id="addItems"></li>
       </ul>
     </div>
 </nav>
@@ -62,5 +63,34 @@
 
        
     </body>
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    const baseUrl="http://localhost:8081";
+    const token = localStorage.getItem("token");
+    const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
+    if (token === null || isNaN(loggedInUserID)) {
 
+            const htmlLogout='<a href="/login/">Login</a>'
+            $("#login").append(htmlLogout);
+
+        }else{
+
+          const html='<a href="/addItems/">add Items</a>'
+          const htmlLogout='<a href="/login/">Logout</a>'
+          $("#addItems").append(html);
+          $("#login").append(htmlLogout);
+
+          $("#login").click(e => {
+                localStorage.removeItem("token");
+                localStorage.removeItem("loggedInUserID");
+                window.location.href = "/login/";
+            });
+        }
+</script>
 </html>

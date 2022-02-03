@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  const baseUrl = "http://localhost:8081";
+  const token = localStorage.getItem("token");
+  const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
+  
+  axios.get(`${baseUrl}/users/${loggedInUserID}`)
+    .then((response) => {
+       const user = response.data;
+
+       if(user.type=="Customer"){
+         const preferences=`
+         <form class="container" id="form-addPreferences" style="border:1px solid black;padding:20px">
+         <h1>Add Category Preferences:</h1>
+         <div id="addPreferences"></div>
+         <button type="submit" class="btn btn-primary" >Submit</button>
+         </form>
+         `
+         $("#preferences").append(preferences);
+
+         
+
+         axios.get(`${baseUrl}/category/`)
+         .then((response) => {
+             const category = response.data;
+               category.forEach(category => {
+                   $("#addPreferences").append(
+                    `
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="${category.categoryid}" id="${category.category}">
+                    <label class="form-check-label" for="flexCheckDefault">
+                     ${category.category}
+                    </label>
+                    </div>
+                    `
+                   )
+                
+                
+               });
+         })
+       }
+       else{
+        const addProduct=`
+        <form class="container" id="form-addProduct" style="border:1px solid black;padding:20px">
+        <h1>Add Product:</h1>
+        <div id="addProduct"></div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+         `
+         $("#product").append(addProduct);
+
+         axios.get(`${baseUrl}/category/`)
+         .then((response) => {
+             const category = response.data;
+               category.forEach(category => {
+                   $("#addPreferences").append(
+                    `
+                    <div class="form-check">
+                    <input class="form-check-input" type="radio" value="${category.categoryid}" id="${category.category}">
+                    <label class="form-check-label" for="flexRadioDisabled">
+                     ${category.category}
+                    </label>
+                    </div>
+                    `
+                   )
+               });
+
+               
+
+         const addCategory=`
+        <form class="container" id="form-addCategory" style="border:1px solid black;padding:20px">
+        <h1>Add Category:</h1>
+        <div id="addCategory"></div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+         `
+         $("#category").append(addCategory);
+
+
+       }
+    })
+
+</script>
+
+<header>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">SP-IT</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="\home\">Home</a></li>
+        <li><a href="\login\">Login</a></li>
+        <li><a href="#">Promotion</a></li>
+        <li><a href="#">Page 3</a></li>
+      </ul>
+    </div> 
+</nav>
+    </header>
+<body>
+  <div style="padding:20px" id="preferences">
+
+  </div>
+
+  <div style="padding:20px" id="product">
+
+  </div>
+  
+  <div style="padding:20px" id="category">
+  </div>
+  
+</body>
+    
+
+</html>
