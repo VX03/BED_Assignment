@@ -51,6 +51,9 @@
          })
        }
        else{
+
+        //---------------------------------------------------------------------------------------------------
+        //Product
         const product=`
          <form class="container" id="form-addProduct" style="border:1px solid black;padding:20px">
          <h1>Add Product:</h1>
@@ -76,7 +79,7 @@
          `
          $("#product").append(product);
 
-//For Product
+//Link to Back-End
          axios.get(`${baseUrl}/category/`)
          .then((response) => {
              const category = response.data;
@@ -92,7 +95,8 @@
                });
          })
 
-
+//---------------------------------------------------------------------------------------------------------------------------
+         //Category
          const category=`
          <form class="container" id="form-addCategory" style="border:1px solid black;padding:20px">
          <h1>Add Category:</h1>
@@ -104,9 +108,45 @@
          <textarea type="text" id="categoryDescription" name="categoryDescription"></textarea><br><br>
          
          <button type="submit" class="btn btn-primary" >Submit</button>
+
+         <div id="success"></div>
          </form>
          `
          $("#category").append(category);
+
+         $("#form-addCategory").submit((event)=>{
+
+            //category name is not inputted in
+            if($("#categoryName").val()==""||$("#categoryName").val()==null){
+                event.preventDefault();
+                const err="<p>Input category Name!!!</p>"
+                $("#success").append(err)
+            }
+            else{
+
+                //body request for back-end post category
+             const requestBody = { 
+                 category:$("#categoryName").val(),
+                 description:$("#categoryDescription").val()
+             }
+
+             //link to post category
+             axios.post(`${baseUrl}/category/`,requestBody,{
+                 headers: { "Authorization": "Bearer " + token }
+             })
+             .then((response)=>{
+                 //Sets values of category form to non 
+                $("#form-addCategory").val("");
+
+             })
+             .catch((error)=>{
+                //prevent refresh to append error
+                event.preventDefault();
+                 $("#success").append("<p>error in operation</p>")
+             })
+            }
+         })
+ 
 
 
        }
