@@ -158,12 +158,15 @@ Category.addCategory(category,description, function (err, result) {
         if (!err) {
             console.log(result);
             res.status(204).send(result);
+            return;
         } 
         else if(err.code == 'ER_DUP_ENTRY'){
             res.status(422).send();
+            return;
         }
          else{
             res.status(500).send();
+            return;
         }
     
     });
@@ -175,8 +178,10 @@ app.get("/category/",(req,res)=>{
         if (err) {
           console.log(error);
           res.status(500).send();
+          return;
         }
         res.status(200).send(users)
+        return;
       });   
 })
 
@@ -200,13 +205,15 @@ app.post('/product/',isLoggedInMiddleware,  function (req, res) {
 
         if (!err) {
             console.log(result);
-            res.status(201).send(result);;
+            return res.status(201).send(result);
+            
         } 
          else if(err.code=='ER_DUP_ENTRY'){
-            res.status(422).send();
-    }
-         else 
-         res.status(500).send();
+            return res.status(422).send();
+        }
+         else {
+          return res.status(500).send();
+        }
     });
 
 });
@@ -303,7 +310,7 @@ app.post('/interest/:userid',isLoggedInMiddleware,  function (req, res) {
     
     var userid = req.params.userid;
     var categoryids =req.body.categoryids;
-    //console.log(categoryids)
+    console.log(categoryids)
     var ids=[]
     ids = categoryids.split(",");
     for (a in ids ) {
@@ -317,10 +324,14 @@ app.post('/interest/:userid',isLoggedInMiddleware,  function (req, res) {
 
         if (!err) {
             console.log(result);
-            res.status(201).send();;
+            res.status(201).send();
+            return;
         } 
          else 
-         res.status(500).send();
+         {res.status(500).send();
+          return;
+        }
+         
     });
 
 });

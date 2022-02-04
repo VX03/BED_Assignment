@@ -18,39 +18,45 @@
     .then((response) => {
        const user = response.data;
 
-       if(user.type=="Customer"){
-        const preferences=`
-         <button type="submit" class="btn btn-primary" id="preferenceButton">Redirect to Preference</button>
-         `
-         $("#preferences").append(preferences);
-
-         $("#preferenceButton").click(function(){
-            window.location.href = "/addPreference/";
-         })
-       }
-       else{
-
-        //---------------------------------------------------------------------------------------------------
-        //Product
-          
-          const product=`
-         <button type="submit" class="btn btn-primary" id="productButton">Redirect to product</button>
-         `
-         $("#product").append(product);
-
-         $("#productButton").click(function(){
-            window.location.href = "/addProduct/";
-         })
+       
 
 //---------------------------------------------------------------------------------------------------------------------------
          //Category
-         const category=`
-         <button type="submit" class="btn btn-primary" id="categoryButton">Redirect to categroy</button>
-         `
-         $("#category").append(category);
 
-         $("#categoryButton").click(function(){
-            window.location.href = "/addCategory/";
+         $("#form-addCategory").submit((event)=>{
+
+            //category name is not inputted in
+            if($("#categoryName").val()==""||$("#categoryName").val()==null){
+                event.preventDefault();
+                const err="<p>Input category Name!!!</p>"
+                $("#success").append(err)
+            }
+            else{
+
+                //body request for back-end post category
+             const requestBody = { 
+                 category:$("#categoryName").val(),
+                 description:$("#categoryDescription").val()
+             }
+
+             //link to post category
+             axios.post(`${baseUrl}/category/`,requestBody,{
+                 headers: { "Authorization": "Bearer " + token }
+             })
+             .then((response)=>{
+                 //Sets values of category form to non 
+                 alert("inserted successfully")
+                $("#form-addCategory").val("");
+                
+
+
+             })
+             .catch((error)=>{
+                //prevent refresh to append error
+                event.preventDefault();
+                 $("#success").append("<p>error in operation</p>")
+             })
+            }
          })
  
 
@@ -58,7 +64,7 @@
        }
        
     
-}
+
 )
 
 </script>
@@ -79,15 +85,22 @@
 </nav>
     </header>
 <body>
-  <div style="padding:20px" id="preferences">
 
-  </div>
-
-  <div style="padding:20px" id="product">
-
-  </div>
   
   <div style="padding:20px" id="category">
+    <form class="container" id="form-addCategory" style="border:1px solid black;padding:20px">
+        <h1>Add Category:</h1>
+
+        <label for="categoryName">Name:</label>
+        <input type="text" id="categoryName" name="categoryName"><br><br>
+
+        <label for="categoryDescription">Description:</label>
+        <textarea type="text" id="categoryDescription" name="categoryDescription"></textarea><br><br>
+        
+        <button type="submit" class="btn btn-primary" >Submit</button>
+
+        <div id="success"></div>
+        </form>
   </div>
   
 </body>

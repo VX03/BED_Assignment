@@ -19,47 +19,57 @@
        const user = response.data;
 
        if(user.type=="Customer"){
-        const preferences=`
-         <button type="submit" class="btn btn-primary" id="preferenceButton">Redirect to Preference</button>
-         `
-         $("#preferences").append(preferences);
+           console.log("here")
 
-         $("#preferenceButton").click(function(){
-            window.location.href = "/addPreference/";
-         })
-       }
-       else{
-
-        //---------------------------------------------------------------------------------------------------
-        //Product
-          
-          const product=`
-         <button type="submit" class="btn btn-primary" id="productButton">Redirect to product</button>
-         `
-         $("#product").append(product);
-
-         $("#productButton").click(function(){
-            window.location.href = "/addProduct/";
+         axios.get(`${baseUrl}/category/`)
+         .then((response) => {
+             const category = response.data;
+               category.forEach(category => {
+                   $("#addPreferences").append(
+                    `
+                    <div class="form-check">
+                    <input name='preference' class="form-check-input" type="checkbox" value="${category.categoryid}" id="${category.category}">
+                    <label class="form-check-label" for="flexCheckDefault">
+                     ${category.category}
+                    </label>
+                    </div>
+                    `
+                   )
+               });
          })
 
-//---------------------------------------------------------------------------------------------------------------------------
-         //Category
-         const category=`
-         <button type="submit" class="btn btn-primary" id="categoryButton">Redirect to categroy</button>
-         `
-         $("#category").append(category);
 
-         $("#categoryButton").click(function(){
-            window.location.href = "/addCategory/";
+         const array="";
+         var num;
+         $("input[type='checkbox']:checked").each(function(){
+
+            num=parseInt($(this).val())
+            array+=num+","
          })
- 
 
 
+
+         $("check").append(array1)
+         const requestBody={
+             userid:loggedInUserID,
+             categoryids:array1
+         }
+
+         console.log(requestBody.categoryids)
+         axios.post(`${baseUrl}/interest/${loggedInUserID}`,requestBody,{
+                 headers: { "Authorization": "Bearer " + token }
+             })
+         .then((response)=>{
+
+            alert("inserted")
+         })
+         .catch((error)=>{
+             alert(error)
+         })
        }
        
-    
-}
-)
+         })
+
 
 </script>
 
@@ -80,14 +90,12 @@
     </header>
 <body>
   <div style="padding:20px" id="preferences">
-
-  </div>
-
-  <div style="padding:20px" id="product">
-
-  </div>
-  
-  <div style="padding:20px" id="category">
+    <form class="container" id="form-addPreferences" style="border:1px solid black;padding:20px">
+        <h1>Add Category Preferences:</h1>
+        <div id="addPreferences"></div>
+        <button type="submit" class="btn btn-primary" >Submit</button>
+        <div id="check"></div>
+        </form>
   </div>
   
 </body>
