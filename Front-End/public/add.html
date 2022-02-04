@@ -19,6 +19,7 @@
        const user = response.data;
 
        if(user.type=="Customer"){
+           console.log("here")
          const preferences=`
          <form class="container" id="form-addPreferences" style="border:1px solid black;padding:20px">
          <h1>Add Category Preferences:</h1>
@@ -50,45 +51,69 @@
          })
        }
        else{
-        const addProduct=`
-        <form class="container" id="form-addProduct" style="border:1px solid black;padding:20px">
-        <h1>Add Product:</h1>
-        <div id="addProduct"></div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-         `
-         $("#product").append(addProduct);
+        const product=`
+         <form class="container" id="form-addProduct" style="border:1px solid black;padding:20px">
+         <h1>Add Product:</h1>
 
+         <label for="productName">Name:</label>
+         <input type="text" id="productName" name="productName"><br><br>
+
+         <label for="productDescription">Description:</label>
+         <textarea type="text" id="productDescription" name="productDescription"></textarea><br><br>
+
+         <div id="addProductCategory" class="row">
+            <label>&nbsp;&nbsp;&nbsp;Category:</label>
+            </div><br>
+
+         <label for="productBrand">Brand:</label>
+         <input type="text" id="productBrand" name="productBrand"><br><br>
+
+         <label for="productPrice">Price:</label>
+         <input type="text" id="productPrice" name="productPrice"><br><br>
+
+         <button type="submit" class="btn btn-primary" >Submit</button>
+         </form>
+         `
+         $("#product").append(product);
+
+//For Product
          axios.get(`${baseUrl}/category/`)
          .then((response) => {
              const category = response.data;
                category.forEach(category => {
-                   $("#addPreferences").append(
+                   $("#addProductCategory").append(
                     `
-                    <div class="form-check">
-                    <input class="form-check-input" type="radio" value="${category.categoryid}" id="${category.category}">
-                    <label class="form-check-label" for="flexRadioDisabled">
-                     ${category.category}
-                    </label>
-                    </div>
+                    <input type="radio" id="html" name="${category.category}" value="${category.categoryid}">
+                    <label for="html">${category.category}&nbsp;&nbsp;</label>
                     `
                    )
+                
+                
                });
+         })
 
-               
 
-         const addCategory=`
-        <form class="container" id="form-addCategory" style="border:1px solid black;padding:20px">
-        <h1>Add Category:</h1>
-        <div id="addCategory"></div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+         const category=`
+         <form class="container" id="form-addCategory" style="border:1px solid black;padding:20px">
+         <h1>Add Category:</h1>
+
+         <label for="categoryName">Name:</label>
+         <input type="text" id="categoryName" name="categoryName"><br><br>
+
+         <label for="categoryDescription">Description:</label>
+         <textarea type="text" id="categoryDescription" name="categoryDescription"></textarea><br><br>
+         
+         <button type="submit" class="btn btn-primary" >Submit</button>
+         </form>
          `
-         $("#category").append(addCategory);
+         $("#category").append(category);
 
 
        }
-    })
+       
+    
+}
+)
 
 </script>
 
