@@ -7,6 +7,24 @@
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID)"));
   if(token === null || isNaN(loggedInUserID)){
+  }else{
+    axios.get(`${baseUrl}/category/`)
+    .then((response) =>{
+      const categories = response.data;
+      categories.forEach((category) => {
+        const categoryHtml =`
+        <div class="card" style="margin-top: 2rem;">
+                            <div class="card-body">
+                                <p class="card-text">${category.text_body}</p>
+                            </div>
+                            <div class="card-footer text-muted">
+                                ${category.created_at}
+                            </div>
+                        </div>`;
+                        $("#category").append(categoryHtml);
+      });
+    })
+    
   }
 </script>
 <header>

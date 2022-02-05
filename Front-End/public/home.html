@@ -92,5 +92,40 @@
                 window.location.href = "/login/";
             });
         }
+    //     axios.get(`${baseUrl}/product/:id`)
+    // .then((response) =>{
+    //   const Products = response.data;
+    //   prod.forEach((productid) => {
+    //     const ProductHtml =`
+    //     <div class="card" style="margin-top: 2rem;">
+    //                         <div class="card-body">
+    //                             <p class="card-text">${prod.text_body}</p>
+    //                         </div>
+    //                         <div class="card-footer text-muted">
+    //                             ${prod.created_at}
+    //                         </div>
+    //                     </div>`;
+    //                     $("#productid").append(ProductHtml);
+    //   });
+    // })
+    axios.get(`${baseUrl}/category/`)
+            .then((response) => {
+                      console.log("product sense")
+                const category = response.data;
+        console.log("get data");
+                for (let i = 0; i < category.length; i++) {
+                  console.log('get product',category[i]);
+                    const categories = category[i];
+                    console.log(categories)
+                    const html = `
+                    <li class="list-group-item">
+                        <a href="/product/${categories.categoryid}">${categories.name}</a>
+                    </li>
+                    `;
+                    console.log("all data checked");
+                    $("#home").append(html);
+                    console.log("data retrieved");
+                }
+            });
 </script>
 </html>
