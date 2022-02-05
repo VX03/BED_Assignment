@@ -22,7 +22,6 @@
            var description = $('#categoryDescription').val();
            const token = localStorage.getItem("token");
 
-<<<<<<< HEAD
 //---------------------------------------------------------------------------------------------------------------------------
          //Category
 
@@ -50,7 +49,6 @@
                  //Sets values of category form to non 
                  alert("inserted successfully")
                 $("#form-addCategory").val("");
-=======
            alert("here")
            var data = "{\"category\":\""+name+"\", \"description\":\""+description+"\"}"; 
             $.ajax({   
@@ -62,7 +60,6 @@
                 dataType: 'json',  
                 success: function (data, textStatus, xhr) {
                     if (data != null && data.success){  
->>>>>>> 02814261b5db16534762445a48e0c2a8f7181626
 
 
                        $('#success').html('Record updated successfully!');
