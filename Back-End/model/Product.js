@@ -38,7 +38,7 @@ const Product = {
                             } 
                             else{
                                 console.log(result);
-                                callback(null, result[0]);
+                                return callback(null, result[0]);
                             }
                         })
                     
@@ -76,10 +76,10 @@ const Product = {
                     } 
                     else if(err){
                         console.log("error");
-                        callback(err,null);
+                        return callback(err,null);
                     }
                     console.log(result)
-                    callback(null,result);
+                    return callback(null,result);
                     
                 });
 
@@ -205,7 +205,7 @@ const Product = {
                     } 
                     else{
                         console.log(result);
-                        callback(null, result);
+                        return callback(null, result);
                     }
                     
                 });
