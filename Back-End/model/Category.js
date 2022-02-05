@@ -55,7 +55,7 @@ const Category = {
                 callback(error, null);
                 return;
               }
-              callback(null, results);
+              return callback(null, results);
             });
           }
         });

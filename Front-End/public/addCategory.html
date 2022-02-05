@@ -11,15 +11,18 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
   const baseUrl = "http://localhost:8081";
-  const token = localStorage.getItem("token");
+
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
   
-  axios.get(`${baseUrl}/users/${loggedInUserID}`)
-    .then((response) => {
-       const user = response.data;
 
-       
+  $(document).ready(function () {  
+        
+        $("#submit").click(function () {  
+           var name = $('#categoryName').val();
+           var description = $('#categoryDescription').val();
+           const token = localStorage.getItem("token");
 
+<<<<<<< HEAD
 //---------------------------------------------------------------------------------------------------------------------------
          //Category
 
@@ -47,25 +50,33 @@
                  //Sets values of category form to non 
                  alert("inserted successfully")
                 $("#form-addCategory").val("");
+=======
+           alert("here")
+           var data = "{\"category\":\""+name+"\", \"description\":\""+description+"\"}"; 
+            $.ajax({   
+                headers: {'authorization': 'Bearer '+token},     
+                url: 'http://localhost:8081/category/',  
+                type: 'POST',
+                data: data,  
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',  
+                success: function (data, textStatus, xhr) {
+                    if (data != null && data.success){  
+>>>>>>> 02814261b5db16534762445a48e0c2a8f7181626
 
 
-             })
-             .catch((error)=>{
-                //prevent refresh to append error
-                event.preventDefault();
-                 $("#success").append("<p>error in operation</p>")
-             })
-            }
-         })
- 
+                       $('#success').html('Record updated successfully!');
 
-
-       }
-       
-    
-
-)
-
+                    } else {
+                       $('#success').html('unsuccessful');
+                    }                           
+                },  
+                error: function (xhr, textStatus, errorThrown) {  
+                    console.log('Error in Operation');  
+                }  
+            });  
+        });  
+    });  
 </script>
 
 <header>
@@ -96,7 +107,7 @@
         <label for="categoryDescription">Description:</label>
         <textarea type="text" id="categoryDescription" name="categoryDescription"></textarea><br><br>
         
-        <button type="submit" class="btn btn-primary" >Submit</button>
+        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
 
         <div id="success"></div>
         </form>

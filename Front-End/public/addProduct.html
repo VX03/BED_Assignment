@@ -14,9 +14,7 @@
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
   
-  axios.get(`${baseUrl}/users/${loggedInUserID}`)
-    .then((response) => {
-       const user = response.data;
+
          axios.get(`${baseUrl}/category/`)
          .then((response) => {
              const category = response.data;
@@ -29,26 +27,17 @@
                    )
                 
                 
-               });
-         })
-         .catch((error)=>{
-             alert("Unable to load")
-         })
-
-         $("#form-addProduct").submit((event)=>{
+               });     
+               
+            $("#form-addProduct").submit((event)=>{
              const name=$("#productName").val();
              const description=$("#productDescription").val();
              const categoryid=parseInt($("input[type='radio'][name='productCategory']:checked").val());
              const brand=$("#productBrand").val();
              const price=parseFloat($("#productPrice").val());
 
+             event.preventDefault();
 
-             if(!(typeof price == 'number') || isNaN(price)){
-                alert("invalid price")
-                $("#form-addProduct").val("");
-
-             }
-             else{
              const requestBody={
                  name:name,
                  description:description,
@@ -75,13 +64,15 @@
                         alert("Something unexpected went wrong.");
                     }
              })
-            }
+            
          })
-       }
-       
-    
 
-)
+         })
+         .catch((error)=>{
+             alert("Unable to load")
+         })
+
+
 
 </script>
 
