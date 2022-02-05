@@ -18,7 +18,7 @@
     .then((response) => {
        const user = response.data;
 
-       if(user.type=="Customer"){
+       if(user.role=="Customer"){
         const preferences=`
          <button type="submit" class="btn btn-primary" id="preferenceButton">Redirect to Preference</button>
          `

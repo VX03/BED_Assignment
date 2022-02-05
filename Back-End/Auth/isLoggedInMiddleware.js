@@ -16,6 +16,8 @@ var check = (req, res, next) => {
     }
     console.log('decodedtoken is'+decodedToken)
     req.decodedToken = decodedToken;
+    req.role = decodedToken.role
+    console.log(req.role)
     next();
   });
 };

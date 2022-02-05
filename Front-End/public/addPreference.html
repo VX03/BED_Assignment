@@ -18,9 +18,6 @@
     .then((response) => {
        const user = response.data;
 
-       if(user.type=="Customer"){
-           console.log("here")
-
          axios.get(`${baseUrl}/category/`)
          .then((response) => {
              const category = response.data;
@@ -41,33 +38,35 @@
 
          const array="";
          var num;
-         $("input[type='checkbox']:checked").each(function(){
+         var selected = new Array();
+         $('input[type="checkbox"]:checked').each(function() {
+            selected[selected.length] = (this.checked ? $(this).val() : "");
+         });
 
-            num=parseInt($(this).val())
-            array+=num+","
-         })
-
-
-
-         $("check").append(array1)
+         if (selected.length > 0) {
+                array=selected.join(",")
+            }
+       
+       $("#form-addPreferences").submit((event)=>{
+        event.preventDefault();
+        $("check").append("<p>hello</p>")
          const requestBody={
              userid:loggedInUserID,
-             categoryids:array1
+             categoryids:array
          }
+        alert(requestBody.categoryids)
 
-         console.log(requestBody.categoryids)
-         axios.post(`${baseUrl}/interest/${loggedInUserID}`,requestBody,{
+        axios.post(`${baseUrl}/interest/${loggedInUserID}`,requestBody,{
                  headers: { "Authorization": "Bearer " + token }
              })
-         .then((response)=>{
+             .then((response)=>{
+                 alert("inserted in")
+             })
+             .catch((error)=>{
+                 alert(error)
+             })
+       })
 
-            alert("inserted")
-         })
-         .catch((error)=>{
-             alert(error)
-         })
-       }
-       
          })
 
 
