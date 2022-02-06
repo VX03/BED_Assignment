@@ -38,23 +38,21 @@
 
          const array="";
          var num;
-         var selected = new Array();
-         $('input[type="checkbox"]:checked').each(function() {
-            selected[selected.length] = (this.checked ? $(this).val() : "");
-         });
-
-         if (selected.length > 0) {
-                array=selected.join(",")
-            }
        
        $("#form-addPreferences").submit((event)=>{
         event.preventDefault();
         $("check").append("<p>hello</p>")
+
+
+        var arr = [];
+              $.each($("input[type='checkbox'][name='preference']:checked"), function(){
+                  arr.push($(this).val());
+              });
+
          const requestBody={
              userid:loggedInUserID,
-             categoryids:array
+             categoryids:arr.join(",")
          }
-        alert(requestBody.categoryids)
 
         axios.post(`${baseUrl}/interest/${loggedInUserID}`,requestBody,{
                  headers: { "Authorization": "Bearer " + token }
