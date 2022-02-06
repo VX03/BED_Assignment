@@ -20,7 +20,7 @@
 
        if(user.role=="Customer"){
         const preferences=`
-         <button type="submit" class="btn btn-primary" id="preferenceButton">Redirect to Preference</button>
+         <button type="submit" class="btn btn-primary col-sm-5" id="preferenceButton">Redirect to Preference</button>
          `
          $("#preferences").append(preferences);
 
@@ -34,7 +34,7 @@
         //Product
           
           const product=`
-         <button type="submit" class="btn btn-primary" id="productButton">Redirect to product</button>
+         <button type="submit" class="btn btn-primary col-sm-5" id="productButton">Redirect to product</button>
          `
          $("#product").append(product);
 
@@ -45,7 +45,7 @@
 //---------------------------------------------------------------------------------------------------------------------------
          //Category
          const category=`
-         <button type="submit" class="btn btn-primary" id="categoryButton">Redirect to categroy</button>
+         <button type="submit" class="btn btn-primary col-sm-5" id="categoryButton">Add Category</button>
          `
          $("#category").append(category);
 
@@ -79,15 +79,15 @@
 </nav>
     </header>
 <body>
-  <div style="padding:20px" id="preferences">
+  <div style="padding:50px" id="preferences">
 
   </div>
 
-  <div style="padding:20px" id="product">
+  <div style="padding:50px;padding-left: 500px;" id="product">
 
   </div>
   
-  <div style="padding:20px" id="category">
+  <div style="padding:50px;padding-left: 300px;" id="category">  
   </div>
   
 </body>
