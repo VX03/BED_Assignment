@@ -30,6 +30,10 @@ app.get("/login/", (req, res) => {
   app.get("/addPromotion/", (req, res) => {
     res.sendFile("/public/addPromotion.html", { root: __dirname });
   });
+
+  app.get("/promotion/", (req, res) => {
+    res.sendFile("/public/promotion.html", { root: __dirname });
+  });
   const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Client server has started listening on port ${PORT}`);
