@@ -15,6 +15,10 @@
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
   
 
+  if(token==null||isNaN(loggedInUserID)){
+    window.location.href = "/login/";
+       }
+       else{
          axios.get(`${baseUrl}/category/`)
          .then((response) => {
              const category = response.data;
@@ -87,7 +91,7 @@
          .catch((error)=>{
              alert("Unable to load")
          })
-
+        }
 
 
 </script>
