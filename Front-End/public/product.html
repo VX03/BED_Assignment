@@ -7,12 +7,11 @@
 <script>
   const baseUrl = "http://localhost:8081";
   const token = localStorage.getItem("token");
-  const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID)"));
+  const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
   //get productid
   const url = window.location.toString();
   console.log(url);
   const productid = parseInt(url.split("/").slice(-1)[0]);
-  // get posts
   axios.get(`${baseUrl}/product/${productid}`)
     .then((response) => {
       const product = response.data;
@@ -24,6 +23,8 @@
      `)
 
     })
+
+    
   axios.get(`${baseUrl}/product/${productid}/reviews`)
     .then((response) => {
       const review = response.data;
@@ -43,29 +44,35 @@
   `
         )
       });
-
     })
+    
+     $(document).on("click", "#button", function() {
 
-  $("#create").submit((event)=>{
-const requestBody={
-  userid:loggedInUserID,
-  rating:parseInt($("option:selected").val()),
-  review:$("#input").val()
-}
+            const review = $("#input").val();
+            const rating =parseInt($("#typeO").val());
+            const requestBody = {
+                userid: loggedInUserID,
+                review:review,
+                rating:rating
+            };
 
-     axios.post(`${baseUrl}/product/${productid}/review`, requestBody, {
-    headers: { "Authorization": "Bearer " + token }    
-  })
 
-    .then((response) => {
-      alert("inserted");
-
-    }).catch((error) => {
-      alert(error)
-    })
-
-  })
- 
+            alert(loggedInUserID)
+            axios.post(`${baseUrl}/product/${productid}/review`, requestBody,{
+                 headers: { "Authorization": "Bearer " + token }
+             })
+                .then((response) => {
+                    alert("successful")
+                })
+                .catch((error) => {
+                    console.log(error);
+                    if (error.response.status === 400) {
+                        alert("Validation failed");
+                    } else {
+                        alert("Something unexpected went wrong.");
+                    }
+                });
+        });
 
 
 </script>
@@ -87,20 +94,21 @@ const requestBody={
 </nav>
 <div id="name" style="padding: 50px;"></div>
 
-<div id="input"></div>
-
 <div id="posts" style="padding: 50px; box-shadow: 2cm; border-color: black;">
 <form id="create">
-<textarea type="text" id="input" name="reviewinput"></textarea><br><br>
-<button type="submit">submit</button>
-<label for="Brand">Brand</label>
 
-<select class="typeform" id="typeO">
+    <select class="typeform" id="typeO">
   <option value="1">1</option>
   <option value="2">2</option>
   <option value="3">3</option>
   <option value="4">4</option>
   <option value="5">5</option>
+</select>
+<textarea type="text" id="input" name="reviewinput"></textarea><br><br>
+<button type="submit" class="btn btn-primary" id="button">Submit</button>
+
+
+  
 </form>
 
 

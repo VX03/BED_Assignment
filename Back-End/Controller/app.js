@@ -277,10 +277,10 @@ app.delete('/product/:id', function(req,res){
 app.post('/product/:id/review',isLoggedInMiddleware,  function (req, res) {
     var role=req.decodedToken.role
     console.log("decoded role is"+role)
-    if(role!="Admin"||role!="Customer"){
-      return res.send("invalid user review")
+    if(!(role!="Admin"||role!="Customer")){
+      return res.status(401).send("invalid user review")
     }
-    
+    console.log("passed")
     var productid = JSON.parse(req.params.id);
     var userid = req.body.userid;
     var rating = req.body.rating;
