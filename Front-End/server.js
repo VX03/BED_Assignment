@@ -27,6 +27,9 @@ app.get("/login/", (req, res) => {
     res.sendFile("/public/addPreference.html", { root: __dirname });
   });
 
+  app.get("/addPromotion/", (req, res) => {
+    res.sendFile("/public/addPromotion.html", { root: __dirname });
+  });
   const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Client server has started listening on port ${PORT}`);
