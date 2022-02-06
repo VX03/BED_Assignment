@@ -175,6 +175,7 @@ Category.addCategory(category,description, function (err, result) {
 //6 - Category.js
 app.get("/category/",(req,res)=>{
     Category.findAll((err, users) => {
+
         if (err) {
           console.log(error);
           res.status(500).send();

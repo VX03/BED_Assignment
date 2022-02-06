@@ -36,6 +36,14 @@
              const brand=$("#productBrand").val();
              const price=parseFloat($("#productPrice").val());
 
+             if(name===""||categoryid==""||brand==""){
+                 alert("Pls enter values!!!")
+             }
+             else if(typeof price != "number"){
+                 alert("Pls enter a valid price")
+
+             }
+             else{
              event.preventDefault();
 
              const requestBody={
@@ -64,7 +72,7 @@
                         alert("Something unexpected went wrong.");
                     }
              })
-            
+             }
          })
 
          })

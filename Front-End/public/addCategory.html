@@ -32,9 +32,14 @@
              .then((response)=>{
                 $("#form-addCategory").val("");
                alert("inserted in")
+               $("#success").append("<p>Inserted in!!!</p>")
              })
              .catch((error)=>{
-                 alert("error")
+                if(error.response.status===422){
+                    alert("There is a similar category!!! Please enter a different category!!!")
+                }
+                else
+                  alert("There is an internal error")
              })
   })
     })
