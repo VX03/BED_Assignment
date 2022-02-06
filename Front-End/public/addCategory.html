@@ -14,12 +14,30 @@
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
   
+  if(token==null||isNaN(loggedInUserID)){
+    window.location.href = "/login/";
+       }
+       else{
+
+
+
+
   axios.get(`${baseUrl}/users/${loggedInUserID}`)
     .then((response) => {
        const user = response.data;
 
+        $("#logout").click(e => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("loggedInUserID");
+      window.location.href = "/login/";
+    });
   $("#form-addCategory").submit((event)=>{
 
+    if($("#categoryName").val()===""||$("#categoryName").val()==null){
+        alert("enter category name!!")
+    }
+
+    else{
     event.preventDefault();
     const requestBody = {
         category:$("#categoryName").val(),
@@ -38,12 +56,18 @@
                 if(error.response.status===422){
                     alert("There is a similar category!!! Please enter a different category!!!")
                 }
+                else if(error.response.status===401){
+                    alert("unauthorized entry")
+                }
                 else
                   alert("There is an internal error")
              })
+            }
+
   })
-    })
+    })}
  
+
 </script>
 
 <header>
@@ -54,9 +78,9 @@
       </div>
       <ul class="nav navbar-nav">
         <li><a href="\home\">Home</a></li>
-        <li><a href="\login\">Login</a></li>
-        <li><a href="#">Promotion</a></li>
-        <li><a href="#">Page 3</a></li>
+        <li><a id="logout">Logout</a></li>
+        <li><a href="\promotion\">Promotion</a></li>
+
       </ul>
     </div> 
 </nav>

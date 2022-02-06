@@ -192,7 +192,7 @@ app.post('/product/',isLoggedInMiddleware,  function (req, res) {
     var role=req.decodedToken.role
     console.log("decoded role is"+role)
     if(role!="Admin"){
-      return res.send("invalid user product")
+      return res.status(401).send("invalid user product")
     }
     
     var name = req.body.name;
@@ -238,7 +238,7 @@ app.get("/category/:name",(req,res,next)=>{
 app.get("/product/:id",(req,res,next)=>{
     const id=parseInt(req.params.id)
     if(isNaN(id)){
-        res.status(400).send()
+        return res.status(400).send()
     }
     product.getProduct(id, function(error, results){
         if (error) {
@@ -261,13 +261,13 @@ app.delete('/product/:id', function(req,res){
     product.deleteProduct(id, function(err,result){
         if (err) {
 
-            res.status(500).send();
+            return res.status(500).send();
         } 
         if(result==null){
-            res.status(404).send();
+            return res.status(404).send();
         }
          else 
-         res.status(204).send();
+          return res.status(204).send();
     });
 
     })
@@ -303,7 +303,7 @@ app.get("/product/:id/reviews",(req,res,next)=>{
     const id=parseInt(req.params.id)
     console.log(typeof(id))
     if(isNaN(id)){
-        res.status(400).send()
+        return res.status(400).send()
     }
     product.allReviews(id, function(error, results){
         if (error) {
@@ -323,9 +323,9 @@ app.get("/product/:id/reviews",(req,res,next)=>{
 app.post('/interest/:userid',isLoggedInMiddleware,  function (req, res) {
     var role=req.decodedToken.role
     console.log("decoded role is"+role)
-    if(role!="Admin"||role!="Customer"){
-        return res.send("invalid category interest")
-      }
+        if(role!="Customer"){
+      return res.status(401).send("invalid user product")
+    }
 
     var userid = req.params.userid;
     var categoryids =req.body.categoryids;
@@ -413,7 +413,7 @@ app.delete('/promotion/:promotionid',isLoggedInMiddleware, function(req,res){
   var role=req.decodedToken.role
   console.log("decoded role is"+role)
   if(role!="Admin"||role!="Customer"){
-    res.send("invalid delete promotion")
+    res.status(401).send("invalid delete promotion")
   }  
   
   var id=req.params.promotionid;
@@ -444,7 +444,7 @@ app.put("/promotion/:promotionid",isLoggedInMiddleware, (req, res, next) => {
   var role=req.decodedToken.role
   console.log("decoded role is"+role)
   if(role!="Admin"||role!="Customer"){
-    res.send("invalid delete promotion")
+    res.status(401).send("invalid delete promotion")
   }  
   
     const promotionid = parseInt(req.params.promotionid);

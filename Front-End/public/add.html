@@ -14,10 +14,20 @@
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
   
+
+  if(token==null||isNaN(loggedInUserID)){
+    window.location.href = "/login/";
+       }
+else{
   axios.get(`${baseUrl}/users/${loggedInUserID}`)
     .then((response) => {
        const user = response.data;
 
+       $("#logout").click(e => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("loggedInUserID");
+      window.location.href = "/login/";
+    });
        if(user.role=="Customer"){
         const preferences=`
          <button type="submit" class="btn btn-primary col-sm-5" id="preferenceButton">Redirect to Preference</button>
@@ -69,7 +79,7 @@
     
 }
 )
-
+}
 </script>
 
 <header>
@@ -80,7 +90,7 @@
       </div>
       <ul class="nav navbar-nav">
         <li><a href="\home\">Home</a></li>
-        <li><a href="\login\">Login</a></li>
+        <li><a id="logout">Logout</a></li>
         <li><a href="\promotion\">Promotion</a></li>
       </ul>
     </div> 
