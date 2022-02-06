@@ -218,7 +218,22 @@ app.post('/product/',isLoggedInMiddleware,  function (req, res) {
     });
 
 });
-
+//8 - Product.js
+app.get("/category/:name",(req,res,next)=>{
+  const name = req.params.name;
+  Category.getCategory(name, function(error, results){
+      if (error) {
+        res.status(500).send();
+        return;
+      };
+      if (results === null) {
+          res.status(404).send();
+          return;
+      };
+      console.log("here")
+      res.status(200).send(results)
+    });
+})
 //8 - Product.js
 app.get("/product/:id",(req,res,next)=>{
     const id=parseInt(req.params.id)

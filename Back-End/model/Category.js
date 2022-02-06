@@ -5,6 +5,43 @@
 const db = require("./databaseConfig");
 
 const Category = {
+
+  getCategory:function(id,callback){
+    var conn = db.getConnection();
+    conn.connect(function (err) {
+        if (err) {
+            console.log(err);
+            return callback(err,null);
+        }
+        else {
+            console.log("Connected!");
+            var sql=`
+            SELECT * FROM category
+            WHERE category.category = ?
+            `
+            conn.query(sql, [id], function (err,result) {
+                conn.end();
+
+                if (result.length===0) {
+                    console.log(err);
+                    return callback(null,null);
+                } 
+                else if(err){
+                    console.log("error");
+                    return callback(err,null);
+                }
+                console.log(result)
+                return callback(null,result);
+                
+            });
+
+        }
+
+    });
+
+
+
+},
     addCategory:function(category,description,callback){
         var conn = db.getConnection();
         conn.connect(function (err) {

@@ -31,6 +31,10 @@ app.get("/login/", (req, res) => {
     res.sendFile("/public/addPromotion.html", { root: __dirname });
   });
 
+  app.get("/product/", (req, res) => {
+    res.sendFile("/public/product.html", { root: __dirname });
+  });
+
   app.get("/promotion/", (req, res) => {
     res.sendFile("/public/promotion.html", { root: __dirname });
   });
