@@ -5,26 +5,72 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script>
+
+//base URL,token,loggedinUserID
   const baseUrl = "http://localhost:8081";
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
-  //get productid
+
+//get URL
   const url = window.location.toString();
   console.log(url);
+//get ProductID
   const productid = parseInt(url.split("/").slice(-1)[0]);
+
+  
+  if (token === null || isNaN(loggedInUserID)) {
+
+const htmlLogout = '<a href="/login/">Login</a>'
+$("#login").append(htmlLogout);
+
+} else {
+
+const html = '<a href="/addItems/">add Items</a>'
+const htmlLogout = '<a href="/login/">Logout</a>'
+$("#addItems").append(html);
+$("#login").append(htmlLogout);
+
+$("#login").click(e => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("loggedInUserID");
+  window.location.href = "/login/";
+});
+}
+
+
+//get product details
   axios.get(`${baseUrl}/product/${productid}`)
     .then((response) => {
       const product = response.data;
       $("#name").append(`<h1>${product.name}</h1>
-     <p>description: </p>
-     <p>${product.description}</p>
-     <p>category: ${product.category}</p>
-     <p>price: ${product.price}</p>
+     <h4>description: </h4>
+     <h4>${product.description}</h4>
+     <h4>category: ${product.category}</h4>
+     <h4>price: ${product.price}</h4>
      `)
 
+
+     if (token === null || isNaN(loggedInUserID)) {
+
+       const htmlLogout = '<a href="/login/">Login</a>'
+       $("#login").append(htmlLogout);
+
+        } else {
+
+        const html = '<a href="/addItems/">add Items</a>'
+        const htmlLogout = '<a href="/login/">Logout</a>'
+        $("#addItems").append(html);
+        $("#login").append(htmlLogout);
+
+        $("#login").click(e => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("loggedInUserID");
+        window.location.href = "/login/";
+        });
+       }
     })
 
-    
+//get reviews
   axios.get(`${baseUrl}/product/${productid}/reviews`)
     .then((response) => {
       const review = response.data;
@@ -45,9 +91,14 @@
         )
       });
     })
-    
-     $(document).on("click", "#button", function() {
 
+//post reviews
+
+     $(document).on("click", "#button", function() {
+        if(token==null||isNaN(loggedInUserID)){
+          alert("Log in as a user")
+        }
+        else{
             const review = $("#input").val();
             const rating =parseInt($("#typeO").val());
             const requestBody = {
@@ -56,13 +107,11 @@
                 rating:rating
             };
 
-
-            alert(loggedInUserID)
             axios.post(`${baseUrl}/product/${productid}/review`, requestBody,{
                  headers: { "Authorization": "Bearer " + token }
              })
                 .then((response) => {
-                    alert("successful")
+                    alert("successful post reviews")
                 })
                 .catch((error) => {
                     console.log(error);
@@ -72,6 +121,7 @@
                         alert("Something unexpected went wrong.");
                     }
                 });
+            }
         });
 
 
@@ -83,10 +133,9 @@
         <a class="navbar-brand" href="#">SP-IT</a>
       </div>
       <ul class="nav navbar-nav">
-        <li><a href="#">Profile</a></li>
-        <li class="active"><a href="#">Product</a></li>
-        <li><a href="#">Promotion</a></li>
-        <li><a href="#">Page 3</a></li>
+        <li class="active"><a href="/home/">Home</a></li>
+        <li id="login"></li>
+        <li id="addItems"></li>
       </ul>
 </header>
 
@@ -96,15 +145,15 @@
 
 <div id="posts" style="padding: 50px; box-shadow: 2cm; border-color: black;">
 <form id="create">
-
+<label>rating:</label>
     <select class="typeform" id="typeO">
   <option value="1">1</option>
   <option value="2">2</option>
   <option value="3">3</option>
   <option value="4">4</option>
   <option value="5">5</option>
-</select>
-<textarea type="text" id="input" name="reviewinput"></textarea><br><br>
+</select><br>
+<textarea type="text" id="input" name="reviewinput" class="col-sm-5"></textarea><br><br><br>
 <button type="submit" class="btn btn-primary" id="button">Submit</button>
 
 
