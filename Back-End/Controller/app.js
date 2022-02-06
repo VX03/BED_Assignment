@@ -367,6 +367,18 @@ Promotion.AddPromotion(productid,startdate,enddate,discount, function (err, resu
     });
 });
 
+app.get("/promotion/",(req,res,next)=>{
+
+    Promotion.findAll(function(error, results){
+        if (error) {
+          res.status(500).send();
+          return;
+        };
+        console.log("here")
+        res.status(200).send(results)
+      });
+})
+
 app.get("/promotion/:id",(req,res,next)=>{
     const id=parseInt(req.params.id)
     if(isNaN(id)){

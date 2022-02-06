@@ -102,6 +102,39 @@ const Promotion = {
         });
 
     },
+    findAll:function(callback){
+        var conn = db.getConnection();
+        conn.connect(function (err) {
+            if (err) {
+                console.log(err);
+                return callback(err,null);
+            }
+            else {
+                console.log("Connected!");
+                var sql=`
+                SELECT product.name, promotion.start, promotion.end, promotion.discount, product.price, promotion.discounted_price,promotion.date_of_creation FROM promotion
+                INNER JOIN product ON
+                product.productid = promotion.fk_productid
+                `
+                conn.query(sql, function (err,result) {
+                    conn.end();
+
+                    if (err) {
+                        console.log(err);
+                        return callback(err,null);
+                    } 
+                    else{
+                        console.log(result);
+                        callback(null, result);
+                    }
+                    
+                });
+
+            }
+
+        });
+
+    },
 
     deletePromotion:function(promotionid,callback){
         var conn = db.getConnection();
