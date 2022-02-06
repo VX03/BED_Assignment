@@ -52,7 +52,16 @@
          $("#categoryButton").click(function(){
             window.location.href = "/addCategory/";
          })
- 
+ //----------------------------------------------------------------------------------------------------------------
+ //Category
+ const promotion=`
+         <button type="submit" class="btn btn-primary col-sm-5" id="promotionButton">Add Promotion</button>
+         `
+         $("#promotion").append(promotion);
+
+         $("#promotionButton").click(function(){
+            window.location.href = "/addPromotion/";
+         })
 
 
        }
@@ -89,7 +98,8 @@
   
   <div style="padding:50px;padding-left: 300px;" id="category">  
   </div>
-  
+  <div style="padding:50px;padding-left: 300px;" id="promotion">  
+</div>
 </body>
     
 

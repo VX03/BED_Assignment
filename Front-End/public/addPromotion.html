@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  const baseUrl = "http://localhost:8081";
+  const token = localStorage.getItem("token");
+  const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
+  
+
+         axios.get(`${baseUrl}/category/`)
+         .then((response) => {
+             const category = response.data;
+               category.forEach(category => {
+                   $("#addProductCategory").append(
+                    `
+                    <input type="radio" id="html" name="productCategory" value="${category.categoryid}" >
+                    <label for="html">${category.category}</label><br>
+                    `
+                   )
+                
+                
+               });     
+               
+            $("#form-addProduct").submit((event)=>{
+             const name=$("#productName").val();
+             const description=$("#productDescription").val();
+             const categoryid=parseInt($("input[type='radio'][name='productCategory']:checked").val());
+             const brand=$("#productBrand").val();
+             const price=parseFloat($("#productPrice").val());
+
+             if(name===""||categoryid==""||brand==""){
+                 alert("Pls enter values!!!")
+             }
+             else if(typeof price != "number"){
+                 alert("Pls enter a valid price")
+
+             }
+             else{
+             event.preventDefault();
+
+             const requestBody={
+                 name:name,
+                 description:description,
+                 categoryid:categoryid,
+                 brand:brand,
+                 price:price
+             }
+
+             
+             axios.post(`${baseUrl}/product/`,requestBody,{
+                 headers: { "Authorization": "Bearer " + token }
+             })
+
+             .then((response)=>{
+               //Sets values of category form to non 
+               $("#form-addProduct").val("");
+               alert("inserted in")
+             })
+             .catch((error)=>{
+                $("#succeed").append("<p>unable to insert in</p>");
+                if (error.response.status === 422) {
+                    alert("duplicate entry")
+                    } else {
+                        alert("Something unexpected went wrong.");
+                    }
+             })
+             }
+         })
+
+         })
+         .catch((error)=>{
+             alert("Unable to load")
+         })
+
+
+
+</script>
+
+<header>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">SP-IT</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="\home\">Home</a></li>
+        <li><a href="\login\">Login</a></li>
+        <li><a href="#">Promotion</a></li>
+        <li><a href="#">Page 3</a></li>
+      </ul>
+    </div> 
+</nav>
+    </header>
+<body>
+
+  <div style="padding:20px" id="product">
+    <form class="container" id="form-addProduct" style="border:1px solid black;padding:20px">
+        <h1>Add Product:</h1>
+
+        <label for="productName">Name:</label>
+        <input type="text" id="productName" name="productName"><br><br>
+
+        <label for="productDescription">Description:</label>
+        <textarea type="text" id="productDescription" name="productDescription"></textarea><br><br>
+
+        <div id="addProductCategory">
+           <label>&nbsp;&nbsp;&nbsp;Category:</label><br>
+           </div><br>
+
+        <label for="productBrand">Brand:</label>
+        <input type="text" id="productBrand" name="productBrand"><br><br>
+
+        <label for="productPrice">Price:</label>
+        <input type="text" id="productPrice" name="productPrice"><br><br>
+
+        <button type="submit" class="btn btn-primary" >Submit</button>
+        <div id="succeed"></div>
+        </form>
+  </div>
+  
+</body>
+    
+
+</html>
