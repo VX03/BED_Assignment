@@ -21,13 +21,42 @@
                product.forEach(product => {
                    $("#product").append(
                     `
-                    <input type="radio" id="html" name="productCategory" value="${product.productid}" >
+                    <input type="radio" id="html" name="productName" value="${product.productid}" >
                     <label for="html">${product.name}</label><br>
                     `
                    )
                 
                 
                });     
+
+        $("#form-addPromotion").submit((event)=>{
+            const productid=parseInt($("input[type='radio'][name='productName']:checked").val());
+            const start=$("#start").val()
+            const end=$("#end").val()
+            const discount=parseInt($("#discount").val())
+
+            const requestBody={
+                id:productid,
+                startdate:start,
+                enddate:end,
+                discount:discount
+            }
+
+            alert(parseInt($("discount").val()))
+            axios.post(`${baseUrl}/promotion/`,requestBody,{
+                 headers: { "Authorization": "Bearer " + token }
+             })
+             .then((response)=>{
+                 alert("inserted in")
+             })
+             .catch((error)=>{
+                 alert(error)
+             })
+
+
+
+
+        })
 
   })
 
@@ -67,7 +96,7 @@
 
             <div style="padding-top: 20px;">
         <label for="discount">Discount(%):</label>
-        <input type="text" id="productBrand" name="productBrand"><br><br>
+        <input type="text" id="discount" name="discount"><br><br>
           </div>
 
         <button type="submit" class="btn btn-primary" >Submit</button>
