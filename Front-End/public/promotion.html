@@ -17,11 +17,58 @@
   axios.get(`${baseUrl}/promotion/`)
          .then((response) => {
              const promotion = response.data;
-               promotion.forEach(product => {
+               promotion.forEach(promotion => {
+
+                var start = new Date(Date.parse(
+                promotion.start));
+
+
+                var startdate=start.getDate();
+                var startmonth=(start.getMonth()+1);
+                var startyear=start.getFullYear();
+                var starthr=start.getHours();
+                var startmin=start.getMinutes();
+                var startsec=start.getSeconds();
+
+                var end = new Date(Date.parse(
+                promotion.end));
+
+                var enddate=end.getDate();
+                var endmonth=(end.getMonth()+1);
+                var endyear=end.getFullYear();
+                var endhr=end.getHours();
+                var endmin=end.getMinutes();
+                var endsec=end.getSeconds();
+
+
+                var creation = new Date(Date.parse(
+                promotion.date_of_creation));
+
+                var createdate=creation.getDate();
+                var createmonth=(creation.getMonth()+1);
+                var createyear=creation.getFullYear();
+                var createhr=creation.getHours();
+                var createmin=creation.getMinutes();
+                var createsec=creation.getSeconds();
+
                    $("#promotion").append(
                     `
-                    <input type="radio" id="html" name="productName" value="${promotion.productid}" >
-                    <label for="html">${promotion.name}</label><br>
+                    <div class="card" style="margin-top: 3rem;"> 
+               <div class="card-body">
+              <li class="list-group-item">
+                        <a style="font-size:20px">${promotion.name}</a>
+                           <p class="card-text">Orginal price: $${(promotion.price).toFixed(2)}</p>
+                           <p class="card-text">Discounted price: $${(promotion.discounted_price).toFixed(2)}</p>
+                           <p class="card-text">From: ${startdate}/${startmonth}/${startyear}  ${starthr}:${startmin}:${startsec}</p>
+                           <p class="card-text">From: ${enddate}/${endmonth}/${endyear}  ${endhr}:${endmin}:${endsec}</p>
+                           </li>
+                                    </div>
+                    
+                   
+                                    <div class="card-footer text-muted">
+                                        ${createdate}/${createmonth}/${createyear}  ${createhr}:${createmin}:${createsec}
+                                </div>
+                      </div>
                     `
                    )
                 
@@ -49,7 +96,7 @@
 
     <div>
         <h1>All Promotion</h1>
-        <div id="promotion"></div>
+        <div id="promotion" style="width:80%;padding: 25px;"></div>
     </div>
 </body>
     
