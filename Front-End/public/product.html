@@ -3,32 +3,65 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
-  const baseUrl = "http://localhost:3004";
+  const baseUrl = "http://localhost:8081";
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID)"));
-  if(token === null || isNaN(loggedInUserID)){
-  }else{
-    axios.get(`${baseUrl}/category/`)
-    .then((response) =>{
-      const categories = response.data;
-      categories.forEach((category) => {
-        const categoryHtml =`
-        <div class="card" style="margin-top: 2rem;">
+  if (token === null || isNaN(loggedInUserID)) {
+    window.location.href = "/login/";
+  }
+  else {
+    const url = window.location.toString();
+    console.log(url);
+    const productid = parseInt(url.split("/").slice(-1)[0]);
+
+    //get productid
+    console.log(productid);
+    let view;
+
+
+
+//get product
+    axios.get(`${baseUrl}/product/${productid}`)
+      .than((response) => {
+        const productInfo = response.data;
+
+        // get postes
+        axios.get(`${baseUrl}/product/${productid}/reviews`)
+          .than((response) => {
+            const userPost = response.data;
+            userPost.forEach((post) => {
+              const posthtml = `
+          <div class="card" style="margin-top: 2rem;">
                             <div class="card-body">
-                                <p class="card-text">${category.text_body}</p>
+                                <p class="card-text">${post.text_body}</p>
                             </div>
                             <div class="card-footer text-muted">
-                                ${category.created_at}
+                                ${post.created_at}
                             </div>
                         </div>`;
-                        $("#category").append(categoryHtml);
+                        //show post
+
+              const isViewingProduct = loggedInUserID === productid;
+              const productfav = userPost.map(pose => post.id).includes(loggedInUserID);
+              const FravouriteProductadd = `<button id ="Frav-product" class="btb bth-primary">add fravourite</button>`;
+              const FravouriteProductremove = `<button id ="remove-product" class="btn btn-danger">remove fravourite</button>`;
+              $("product-profile").append(`
+                        <h1>${productInfo.name}</h1>
+                        <p style='margin-top: 1rem>${productInfo.description}</p>)
+                        ${ isViewingProduct ?
+                  "" : 
+                productfav ? FravouriteProductadd :FravouriteProductremove}`
+              )
+              ;
+              $("#posts").append(posthtml);
+            });
+          })
       });
-    })
-    
   }
+
 </script>
 <header>
-<nav class="navbar navbar-inverse">
+  <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">SP-IT</a>
@@ -39,8 +72,12 @@
         <li><a href="#">Promotion</a></li>
         <li><a href="#">Page 3</a></li>
       </ul>
-    </header>
+</header>
 
-    </div>
-  </nav>
+</div>
+</nav>
+<div id="posts">
+
+</div>
+
 </html>
