@@ -8,55 +8,64 @@
   const baseUrl = "http://localhost:8081";
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID)"));
+  //get productid
+  const url = window.location.toString();
+  console.log(url);
+  const productid = parseInt(url.split("/").slice(-1)[0]);
+  // get posts
+  axios.get(`${baseUrl}/product/${productid}`)
+    .then((response) => {
+      const product = response.data;
+      $("#name").append(`<h1>${product.name}</h1>
+     <p>description: </p>
+     <p>${product.description}</p>
+     <p>category: ${product.category}</p>
+     <p>price: ${product.price}</p>
+     `)
 
-    const url = window.location.toString();
-    console.log(url);
-    const productid = parseInt(url.split("/").slice(-1)[0]);
+    })
+  axios.get(`${baseUrl}/product/${productid}/reviews`)
+    .then((response) => {
+      const review = response.data;
+      review.forEach(review => {
+        $("#posts").append(
 
-    //get productid
-    console.log(url);
-    console.log(productid);
-    let view;
-
-
-
-//get product
-    axios.get(`${baseUrl}/product/${productid}`)
-      .than((response) => {
-        const productInfo = response.data;
-
-        // get postes
-        axios.get(`${baseUrl}/product/${productid}/reviews`)
-          .than((response) => {
-            const userPost = response.data;
-            userPost.forEach((post) => {
-              const posthtml = `
-          <div class="card" style="margin-top: 2rem;">
-                            <div class="card-body">
-                                <p class="card-text">${post.review}</p>
-                            </div>
-                            <div class="card-footer text-muted">
-                                ${post.date_created_at}
-                            </div>
-                        </div>`;
-                        //show post
-
-              const isViewingProduct = loggedInUserID === productid;
-              const productfav = userPost.map(pose => post.id).includes(loggedInUserID);
-              const FravouriteProductadd = `<button id ="Frav-product" class="btb bth-primary">add fravourite</button>`;
-              const FravouriteProductremove = `<button id ="remove-product" class="btn btn-danger">remove fravourite</button>`;
-              $("product-profile").append(`
-                        <h1>${productInfo.name}</h1>
-                        <p style='margin-top: 1rem>${productInfo.description}</p>)
-                        ${ isViewingProduct ?
-                  "" : 
-                productfav ? FravouriteProductadd :FravouriteProductremove}`
-              )
-              ;
-              $("#posts").append(posthtml);
-            });
-          })
+          `
+       <div class="card" style="margin-top: 2rem;"> 
+              <li class="list-group-item">
+                <a>${review.username}</a> 
+                 <p class="card-text">${review.rating}</p>
+                           <p class="card-text">${review.review}</p>
+                          
+                           </li>   
+                       </div>
+       
+  `
+        )
       });
+
+    })
+
+  $("#create").submit((event)=>{
+const requestBody={
+  userid:loggedInUserID,
+  rating:parseInt($("option:selected").val()),
+  review:$("#input").val()
+}
+
+     axios.post(`${baseUrl}/product/${productid}/review`, requestBody, {
+    headers: { "Authorization": "Bearer " + token }    
+  })
+
+    .then((response) => {
+      alert("inserted");
+
+    }).catch((error) => {
+      alert(error)
+    })
+
+  })
+ 
 
 
 </script>
@@ -76,7 +85,27 @@
 
 </div>
 </nav>
-<div id="posts">
+<div id="name" style="padding: 50px;"></div>
+
+<div id="input"></div>
+
+<div id="posts" style="padding: 50px; box-shadow: 2cm; border-color: black;">
+<form id="create">
+<textarea type="text" id="input" name="reviewinput"></textarea><br><br>
+<button type="submit">submit</button>
+<label for="Brand">Brand</label>
+
+<select class="typeform" id="typeO">
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+</form>
+
+
+
+
 
 </div>
 

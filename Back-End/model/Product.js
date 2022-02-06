@@ -78,8 +78,9 @@ const Product = {
                         console.log("error");
                         return callback(err,null);
                     }
-                    console.log(result)
-                    return callback(null,result);
+                    
+                    console.log(result[0])
+                    return callback(null,result[0]);
                     
                 });
 
