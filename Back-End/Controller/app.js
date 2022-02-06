@@ -400,6 +400,16 @@ app.delete('/promotion/:promotionid',isLoggedInMiddleware, function(req,res){
     });
 })
 
+// get all product
+app.get("/product/",(req,res)=>{
+  product.findAll((err, prods) => {
+      if (err) {
+        console.log(error);
+        res.status(500).send();
+      }
+      res.status(200).send(prods)
+    });   
+})
 app.put("/promotion/:promotionid",isLoggedInMiddleware, (req, res, next) => {
   var role=req.decodedToken.role
   console.log("decoded role is"+role)

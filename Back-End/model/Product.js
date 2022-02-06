@@ -90,6 +90,30 @@ const Product = {
     
 
     },
+    findAll: function (callback) {
+        var dbConn = db.getConnection();
+        dbConn.connect(function (err) {
+    
+          if (err) {//database connection gt issue!
+    
+            console.log(err);
+            return callback(err, null);
+          } else {
+            const findAllQuery =
+              `
+        SELECT * From Product;
+        `;
+            dbConn.query(findAllQuery, (error, results) => {
+              dbConn.end();
+              if (error) {
+                callback(error, null);
+                return;
+              }
+              callback(null, results);
+            });
+          }
+        });
+      },
 
     deleteProduct:function(id,callback){
         var conn = db.getConnection();
