@@ -14,15 +14,15 @@
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
   
-  
+  //get promotion
   axios.get(`${baseUrl}/promotion/`)
          .then((response) => {
              const promotion = response.data;
                promotion.forEach(promotion => {
-
+                
+                //start date and time of promotion
                 var start = new Date(Date.parse(
                 promotion.start));
-
 
                 var startdate=start.getDate();
                 var startmonth=(start.getMonth()+1);
@@ -31,6 +31,7 @@
                 var startmin=start.getMinutes();
                 var startsec=start.getSeconds();
 
+                //end date and time of promotion
                 var end = new Date(Date.parse(
                 promotion.end));
 
@@ -42,6 +43,7 @@
                 var endsec=end.getSeconds();
 
 
+                //date of creation
                 var creation = new Date(Date.parse(
                 promotion.date_of_creation));
 
@@ -52,6 +54,7 @@
                 var createmin=creation.getMinutes();
                 var createsec=creation.getSeconds();
 
+                //append
                    $("#promotion").append(
                     `
                     <div class="card" style="margin-top: 3rem;"> 
@@ -76,7 +79,7 @@
                 
                });     
                
-               
+               //logout
        $("#logout").click(e => {
       localStorage.removeItem("token");
       localStorage.removeItem("loggedInUserID");

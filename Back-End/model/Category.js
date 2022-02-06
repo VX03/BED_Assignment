@@ -1,6 +1,4 @@
-//class:1B04
-//admin no:p2123136
-//name:Vernell Lim Xi
+
 
 const db = require("./databaseConfig");
 

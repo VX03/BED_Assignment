@@ -17,25 +17,6 @@
 //get ProductID
   const productid = parseInt(url.split("/").slice(-1)[0]);
 
-  
-  if (token === null || isNaN(loggedInUserID)) {
-
-const htmlLogout = '<a href="/login/">Login</a>'
-$("#login").append(htmlLogout);
-
-} else {
-
-const html = '<a href="/addItems/">add Items</a>'
-const htmlLogout = '<a href="/login/">Logout</a>'
-$("#addItems").append(html);
-$("#login").append(htmlLogout);
-
-$("#login").click(e => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("loggedInUserID");
-  window.location.href = "/login/";
-});
-}
 
 
 //get product details
@@ -49,7 +30,7 @@ $("#login").click(e => {
      <h4>price: ${product.price}</h4>
      `)
 
-
+//login
      if (token === null || isNaN(loggedInUserID)) {
 
        const htmlLogout = '<a href="/login/">Login</a>'
@@ -57,6 +38,7 @@ $("#login").click(e => {
 
         } else {
 
+            //logout
         const html = '<a href="/addItems/">add Items</a>'
         const htmlLogout = '<a href="/login/">Logout</a>'
         $("#addItems").append(html);
@@ -107,6 +89,7 @@ $("#login").click(e => {
                 rating:rating
             };
 
+            //route
             axios.post(`${baseUrl}/product/${productid}/review`, requestBody,{
                  headers: { "Authorization": "Bearer " + token }
              })
@@ -136,6 +119,7 @@ $("#login").click(e => {
         <li class="active"><a href="/home/">Home</a></li>
         <li id="login"></li>
         <li id="addItems"></li>
+        <li><a href="/promotion/">Promotion</a></li>
       </ul>
 </header>
 

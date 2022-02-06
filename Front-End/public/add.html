@@ -1,3 +1,7 @@
+<!-- class:1B04
+admin no:p2123136, 32142902
+name:Vernell Lim Xi ,Edwin -->
+
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -14,7 +18,7 @@
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
   
-
+//login
   if(token==null||isNaN(loggedInUserID)){
     window.location.href = "/login/";
        }
@@ -23,11 +27,13 @@ else{
     .then((response) => {
        const user = response.data;
 
+       //logout
        $("#logout").click(e => {
       localStorage.removeItem("token");
       localStorage.removeItem("loggedInUserID");
       window.location.href = "/login/";
     });
+    //only for customer
        if(user.role=="Customer"){
         const preferences=`
          <button type="submit" class="btn btn-primary col-sm-5" id="preferenceButton">Redirect to Preference</button>
@@ -38,6 +44,8 @@ else{
             window.location.href = "/addPreference/";
          })
        }
+
+       //for Admin
        else{
 
         //---------------------------------------------------------------------------------------------------
@@ -63,7 +71,7 @@ else{
             window.location.href = "/addCategory/";
          })
  //----------------------------------------------------------------------------------------------------------------
- //Category
+ //Promotion
  const promotion=`
          <button type="submit" class="btn btn-primary col-sm-5" id="promotionButton">Add Promotion</button>
          `

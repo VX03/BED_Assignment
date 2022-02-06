@@ -1,3 +1,8 @@
+<!-- class:1B04
+admin no:p2123136, 32142902
+name:Vernell Lim Xi ,Edwin -->
+
+
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -13,24 +18,25 @@
   const baseUrl = "http://localhost:8081";
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
-  
+  //login
   if(token==null||isNaN(loggedInUserID)){
     window.location.href = "/login/";
        }
        else{
 
 
-
-
   axios.get(`${baseUrl}/users/${loggedInUserID}`)
     .then((response) => {
        const user = response.data;
 
+       // logout 
         $("#logout").click(e => {
       localStorage.removeItem("token");
       localStorage.removeItem("loggedInUserID");
       window.location.href = "/login/";
     });
+
+// form submission
   $("#form-addCategory").submit((event)=>{
 
     if($("#categoryName").val()===""||$("#categoryName").val()==null){
@@ -44,14 +50,17 @@
         description:$("#categoryDescription").val()
     }
 
+    //post routes
     axios.post(`${baseUrl}/category/`,requestBody,{
                  headers: { "Authorization": "Bearer " + token }
              })
+
              .then((response)=>{
                 $("#form-addCategory").val("");
                alert("inserted in")
                $("#success").append("<p>Inserted in!!!</p>")
              })
+             
              .catch((error)=>{
                 if(error.response.status===422){
                     alert("There is a similar category!!! Please enter a different category!!!")

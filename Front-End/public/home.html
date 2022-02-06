@@ -1,3 +1,7 @@
+<!-- class:1B04
+admin no:p2123136, 32142902
+name:Vernell Lim Xi ,Edwin -->
+
 <!DOCTYPE html>
 
 <head>
@@ -17,6 +21,7 @@
         <li class="active"><a href="/home/">Home</a></li>
         <li id="login"></li>
         <li id="addItems"></li>
+        <li><a href="/promotion/">Promotion</a></li>
       </ul>
 
 
@@ -71,6 +76,8 @@
   const baseUrl = "http://localhost:8081";
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
+
+  //whether loggin in
   if (token === null || isNaN(loggedInUserID)) {
 
     const htmlLogout = '<a href="/login/">Login</a>'
@@ -83,6 +90,7 @@
     $("#addItems").append(html);
     $("#login").append(htmlLogout);
 
+    //logged out
     $("#login").click(e => {
       localStorage.removeItem("token");
       localStorage.removeItem("loggedInUserID");
@@ -91,7 +99,7 @@
   }
 
 
-
+//form submission
   $("#category-form").submit((event) => {
     event.preventDefault();
     const search = $("#search").val();
@@ -101,11 +109,13 @@
 
 
         const product = response.data
-       
+       //delete all html
         $("#prod").empty()
         product.forEach(product => {
+            //if item is there
   if(search == product.name){
 
+    //append
           $("#prod").append(`<div class="card" style="margin-top: 2rem;"> 
               <li class="list-group-item">
                         <a href="/product/${product.productid}">${product.name}</a>
@@ -125,14 +135,16 @@
   axios.get(`${baseUrl}/category/`)
     .then((response) => {
       const category = response.data
+      //get category
       category.forEach(category => {
         $("#type").append(`<option value="${category.categoryid}">${category.category}</option>`)
       })
 
-
+      //get dropdown value
       $("select.typelist").change(function () {
         var select = $(this).children("option:selected").val()
 
+        //get category
         axios.get(`${baseUrl}/category/${select}`)
 
           .then((response) => {
@@ -163,8 +175,11 @@
       const product = response.data
       var aaray = new Array();
       product.forEach(product => {
+          //get all item brand
           aaray.push(product.brand)
     })
+
+    //delete the extra brands
     for(var i=0;i<aaray.length;i++){
         for(var n=0;n<i;n++){
         if(aaray[n]===aaray[i]){
@@ -172,15 +187,20 @@
         }
     }
     }
+    //append the brands in dropdown list
     for(var i=0;i<aaray.length;i++){
         $("#typeO").append(`<option value="${aaray[i]}">${aaray[i]}</option>`)
 
 
     }
-        $("select.typeform").change(function () {
 
+
+       //for every click on the item
+        $("select.typeform").change(function () {
+            //get item value
           var select = $(this).children("option:selected").val()
 
+          //get item 
           axios.get(`${baseUrl}/product/`)
 
             .then((response) => {

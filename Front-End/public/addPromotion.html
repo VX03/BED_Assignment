@@ -1,4 +1,9 @@
+<!-- class:1B04
+admin no:p2123136, 32142902
+name:Vernell Lim Xi ,Edwin -->
+
 <!DOCTYPE html>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -13,7 +18,10 @@
   const baseUrl = "http://localhost:8081";
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
-  
+
+
+
+//verify if logged in
   if(token==null||isNaN(loggedInUserID)){
     window.location.href = "/login/";
        }
@@ -32,25 +40,29 @@
                 
                });     
 
-
+//click on logout
                $("#logout").click(e => {
       localStorage.removeItem("token");
       localStorage.removeItem("loggedInUserID");
       window.location.href = "/login/";
     });
 
+//submit the form
         $("#form-addPromotion").submit((event)=>{
+            //request body
             const productid=parseInt($("input[type='radio'][name='productName']:checked").val());
             const start=$("#start").val()
             const end=$("#end").val()
             const discount=parseInt($("#discount").val())
 
+            //validation
             if(isNaN(productid)||productid==""){
                 alert("Enter product")
             }
             else if(isNaN(discount)||discount==""){
                 alert("Enter valid discount")
             }
+            //success
             else{
             const requestBody={
                 id:productid,
@@ -59,6 +71,7 @@
                 discount:discount
             }
 
+            //get to post route
             axios.post(`${baseUrl}/promotion/`,requestBody,{
                  headers: { "Authorization": "Bearer " + token }
              })

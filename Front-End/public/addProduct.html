@@ -1,3 +1,8 @@
+<!-- class:1B04
+admin no:p2123136, 32142902
+name:Vernell Lim Xi ,Edwin -->
+
+
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -13,12 +18,13 @@
   const baseUrl = "http://localhost:8081";
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
-  
 
+//check if login
   if(token==null||isNaN(loggedInUserID)){
     window.location.href = "/login/";
        }
        else{
+           //get categories
          axios.get(`${baseUrl}/category/`)
          .then((response) => {
              const category = response.data;
@@ -34,13 +40,14 @@
                });     
                
 
-
+//logout button
                $("#logout").click(e => {
       localStorage.removeItem("token");
       localStorage.removeItem("loggedInUserID");
       window.location.href = "/login/";
     });
 
+    //for form submission
             $("#form-addProduct").submit((event)=>{
              const name=$("#productName").val();
              const description=$("#productDescription").val();
@@ -48,6 +55,7 @@
              const brand=$("#productBrand").val();
              const price=parseFloat($("#productPrice").val());
 
+             //validation
              if(name===""||categoryid==""||brand==""){
                  alert("Pls enter values!!!")
              }
@@ -56,6 +64,8 @@
 
              }
              else{
+        
+            //successful
              event.preventDefault();
 
              const requestBody={
@@ -66,7 +76,7 @@
                  price:price
              }
 
-             
+             //post route
              axios.post(`${baseUrl}/product/`,requestBody,{
                  headers: { "Authorization": "Bearer " + token }
              })
