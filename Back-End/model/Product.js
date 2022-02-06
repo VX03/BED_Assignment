@@ -101,7 +101,7 @@ const Product = {
           } else {
             const findAllQuery =
               `
-        SELECT * From Product;
+        SELECT * From product;
         `;
             dbConn.query(findAllQuery, (error, results) => {
               dbConn.end();
