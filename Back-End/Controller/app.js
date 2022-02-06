@@ -147,7 +147,7 @@ app.post('/category/',isLoggedInMiddleware,  function (req, res) {
     var role=req.decodedToken.role
     console.log("decoded role is"+role)
     if(role!="Admin"){
-      return res.send("invalid user")
+      res.send("invalid user")
     }
     
     var category = req.body.category;
@@ -191,7 +191,7 @@ app.post('/product/',isLoggedInMiddleware,  function (req, res) {
     var role=req.decodedToken.role
     console.log("decoded role is"+role)
     if(role!="Admin"){
-      return res.send("invalid user product")
+      res.send("invalid user product")
     }
     
     var name = req.body.name;

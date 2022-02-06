@@ -63,8 +63,7 @@
       </div>
 
     </div>
-    <ul class="list-group" id="prod">
-      <div id=infos></div>
+    <ul class="list-group" id="cate">
   </div>
 
 
@@ -132,40 +131,18 @@
   //                 console.log("data retrieved");
   //             }
   // }); 
+  console.log(productid);
   axios.get(`${baseUrl}/category/`)
     .then((response) => {
       const category = response.data
       console.log("category get");
-
-      axios.get(`${baseUrl}/product/`)
-        .then((response) => {
-          const product = response.data
-          console.log("product get");
-          for (i = 0; i < product.length; i++) {
-            const prodlist = product[i];
-            console.log(prodlist);
-            const html = ` 
-             <div class="card" style="margin-top: 2rem;"> 
-               <div class="card-body">
-              <li class="list-group-item">
-                        <a href="/product/${prodlist.productid}">${prodlist.name}</a>
-                       
-                           <p class="card-text">${prodlist.price}</p>
-                           <p class="card-text">${prodlist.description}</p>
-                           </li>
-                                    </div>
-                    
-                   
-                      </div>
-                    `
-
-              ;
-            $("#prod").append(html);
-            $("#infos").append(html);
-          }
-
-        });
+      
+      axios.get(`${baseUrl}/product/${productid}`)
+    .then((response) => {
+      const product = response.data
+      console.log("product get");
     });
+  });
 </script>
 
 </html>
