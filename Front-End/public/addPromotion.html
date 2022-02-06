@@ -15,71 +15,21 @@
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
   
 
-         axios.get(`${baseUrl}/category/`)
+  axios.get(`${baseUrl}/product/`)
          .then((response) => {
-             const category = response.data;
-               category.forEach(category => {
-                   $("#addProductCategory").append(
+             const product = response.data;
+               product.forEach(product => {
+                   $("#product").append(
                     `
-                    <input type="radio" id="html" name="productCategory" value="${category.categoryid}" >
-                    <label for="html">${category.category}</label><br>
+                    <input type="radio" id="html" name="productCategory" value="${product.productid}" >
+                    <label for="html">${product.name}</label><br>
                     `
                    )
                 
                 
                });     
-               
-            $("#form-addProduct").submit((event)=>{
-             const name=$("#productName").val();
-             const description=$("#productDescription").val();
-             const categoryid=parseInt($("input[type='radio'][name='productCategory']:checked").val());
-             const brand=$("#productBrand").val();
-             const price=parseFloat($("#productPrice").val());
 
-             if(name===""||categoryid==""||brand==""){
-                 alert("Pls enter values!!!")
-             }
-             else if(typeof price != "number"){
-                 alert("Pls enter a valid price")
-
-             }
-             else{
-             event.preventDefault();
-
-             const requestBody={
-                 name:name,
-                 description:description,
-                 categoryid:categoryid,
-                 brand:brand,
-                 price:price
-             }
-
-             
-             axios.post(`${baseUrl}/product/`,requestBody,{
-                 headers: { "Authorization": "Bearer " + token }
-             })
-
-             .then((response)=>{
-               //Sets values of category form to non 
-               $("#form-addProduct").val("");
-               alert("inserted in")
-             })
-             .catch((error)=>{
-                $("#succeed").append("<p>unable to insert in</p>");
-                if (error.response.status === 422) {
-                    alert("duplicate entry")
-                    } else {
-                        alert("Something unexpected went wrong.");
-                    }
-             })
-             }
-         })
-
-         })
-         .catch((error)=>{
-             alert("Unable to load")
-         })
-
+  })
 
 
 </script>
@@ -101,32 +51,31 @@
     </header>
 <body>
 
-  <div style="padding:20px" id="product">
-    <form class="container" id="form-addProduct" style="border:1px solid black;padding:20px">
-        <h1>Add Product:</h1>
+  <div style="padding:20px" id="promotion">
+    <form class="container" id="form-addPromotion" style="border:1px solid black;padding:20px">
+        <h1>Add Promotion:</h1>
 
-        <label for="productName">Name:</label>
-        <input type="text" id="productName" name="productName"><br><br>
+        <div id="product">
+            <label class="text-primary">&nbsp;&nbsp;&nbsp;Product:</label><br>
+            </div><br>
 
-        <label for="productDescription">Description:</label>
-        <textarea type="text" id="productDescription" name="productDescription"></textarea><br><br>
+            <label>Start of Promotion:</label>
+            <input type="datetime-local" id="start" name="start">
 
-        <div id="addProductCategory">
-           <label>&nbsp;&nbsp;&nbsp;Category:</label><br>
-           </div><br>
+            <label>End of Promotion:</label>
+            <input type="datetime-local" id="end" name="end">
 
-        <label for="productBrand">Brand:</label>
+            <div style="padding-top: 20px;">
+        <label for="discount">Discount(%):</label>
         <input type="text" id="productBrand" name="productBrand"><br><br>
-
-        <label for="productPrice">Price:</label>
-        <input type="text" id="productPrice" name="productPrice"><br><br>
+          </div>
 
         <button type="submit" class="btn btn-primary" >Submit</button>
         <div id="succeed"></div>
         </form>
-  </div>
+
   
 </body>
-    
+      </div>
 
 </html>
