@@ -2,19 +2,19 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <script>
   const baseUrl = "http://localhost:8081";
   const token = localStorage.getItem("token");
   const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID)"));
-  if (token === null || isNaN(loggedInUserID)) {
-    window.location.href = "/login/";
-  }
-  else {
+
     const url = window.location.toString();
     console.log(url);
     const productid = parseInt(url.split("/").slice(-1)[0]);
 
     //get productid
+    console.log(url);
     console.log(productid);
     let view;
 
@@ -33,10 +33,10 @@
               const posthtml = `
           <div class="card" style="margin-top: 2rem;">
                             <div class="card-body">
-                                <p class="card-text">${post.text_body}</p>
+                                <p class="card-text">${post.review}</p>
                             </div>
                             <div class="card-footer text-muted">
-                                ${post.created_at}
+                                ${post.date_created_at}
                             </div>
                         </div>`;
                         //show post
@@ -57,7 +57,7 @@
             });
           })
       });
-  }
+
 
 </script>
 <header>

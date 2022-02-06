@@ -219,9 +219,9 @@ app.post('/product/',isLoggedInMiddleware,  function (req, res) {
 
 });
 //8 - Product.js
-app.get("/category/:name",(req,res,next)=>{
-  const name = req.params.name;
-  Category.getCategory(name, function(error, results){
+app.get("/category/:id",(req,res,next)=>{
+  const id = req.params.id;
+  Category.getCategory(id, function(error, results){
       if (error) {
         res.status(500).send();
         return;
@@ -234,6 +234,7 @@ app.get("/category/:name",(req,res,next)=>{
       res.status(200).send(results)
     });
 })
+
 //8 - Product.js
 app.get("/product/:id",(req,res,next)=>{
     const id=parseInt(req.params.id)

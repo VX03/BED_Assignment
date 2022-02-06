@@ -6,6 +6,8 @@ const db = require("./databaseConfig");
 
 const Category = {
 
+
+  
   getCategory:function(id,callback){
     var conn = db.getConnection();
     conn.connect(function (err) {
@@ -16,17 +18,16 @@ const Category = {
         else {
             console.log("Connected!");
             var sql=`
-            SELECT * FROM category
-            WHERE category.category = ?
+            SELECT product.name, product.description, category.categoryid, category.category, product.brand, product.price FROM product
+            INNER JOIN category ON
+            product.fk_categoryid = category.categoryid
+            WHERE category.categoryid = ?
             `
             conn.query(sql, [id], function (err,result) {
                 conn.end();
 
-                if (result.length===0) {
-                    console.log(err);
-                    return callback(null,null);
-                } 
-                else if(err){
+
+               if(err){
                     console.log("error");
                     return callback(err,null);
                 }

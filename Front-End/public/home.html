@@ -27,19 +27,19 @@
 
 <body>
 
-  <div id="category-form" class="container">
+  <form id="category-form" class="container">
 
     <div class="row">
 
       <label for="category">category</label>
 
-      <select name="typelist" id="type">
+      <select class="typelist" id="type">
 
       </select>
 
-      <label for="category">category</label>
+      <label for="Brand">Brand</label>
 
-      <select name="typeform" id="typeO">
+      <select class="typeform" id="typeO">
 
       </select>
 
@@ -49,7 +49,7 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 
-  </div>
+  </form>
   <ul class="list-group" id="prod">
     <!-- 
       <div id="search" class="d-flex justify-content-end row"
@@ -89,81 +89,149 @@
       window.location.href = "/login/";
     });
   }
-  
-  // $("#category-form").submit((event) => {
-  //   const search = $("#search").val()
-  //     axios.get(`${baseUrl}/category/${search}`)
-  
-$("#category-form").submit((event) =>{
-const search =$("search").val()
-axios.get(`${baseUrl}/category/${search}`)
-.then((response) =>{
-  const product = response.data
-  product.forEach(product => { 
-    $("#prod").replaceWith(`<div class="card" style="margin-top: 2rem;"> 
+
+
+
+  $("#category-form").submit((event) => {
+    event.preventDefault();
+    const search = $("#search").val();
+    axios.get(`${baseUrl}/product/`)
+      .then((response) => {
+       
+
+
+        const product = response.data
+       
+        $("#prod").empty()
+        product.forEach(product => {
+  if(search == product.name){
+
+          $("#prod").append(`<div class="card" style="margin-top: 2rem;"> 
+              <li class="list-group-item">
+                        <a href="/product/${product.productid}">${product.name}</a>
+                           <p class="card-text">${product.price}</p>
+                           <p class="card-text">${product.description}</p>
+                           </li>   
+                       </div>`)
+                      }
+
+        });
+
+
+      })
+  })
+
+  //category filter
+  axios.get(`${baseUrl}/category/`)
+    .then((response) => {
+      const category = response.data
+      category.forEach(category => {
+        $("#type").append(`<option value="${category.categoryid}">${category.category}</option>`)
+      })
+
+
+      $("select.typelist").change(function () {
+        var select = $(this).children("option:selected").val()
+
+        axios.get(`${baseUrl}/category/${select}`)
+
+          .then((response) => {
+
+            const product = response.data;
+
+            $("#prod").empty()
+            product.forEach(product => {
+              $("#prod").append(
+                `
+    <div class="card" style="margin-top: 2rem;"> 
+              <li class="list-group-item">
+                        <a href="/product/${product.productid}">${product.name}</a>
+                           <p class="card-text">${product.price}</p>
+                           <p class="card-text">${product.description}</p>
+                           </li>   
+                       </div>
+                       `)
+            })
+          })
+      })
+    });
+
+
+  //brand filter
+  axios.get(`${baseUrl}/product/`)
+    .then((response) => {
+      const product = response.data
+      var aaray = new Array(0);
+      product.forEach(product => {
+
+        $("#typeO").append(`<option value="${product.brand}">${product.brand}</option>`)
+
+        $("select.typeform").change(function () {
+
+          var select = $(this).children("option:selected").val()
+
+          axios.get(`${baseUrl}/product/`)
+
+            .then((response) => {
+              const product = response.data;
+              $("#prod").empty()
+              product.forEach(product => {
+
+                if (select == product.brand) {
+
+
+                  $("#prod").append(
+                    `
+    <div class="card" style="margin-top: 2rem;"> 
+              <li class="list-group-item">
+                        <a href="/product/${product.productid}">${product.name}</a>
+                           <p class="card-text">${product.price}</p>
+                           <p class="card-text">${product.description}</p>
+                           </li>   
+                       </div>
+                       `)
+                }
+
+              })
+
+            })
+        })
+      })
+    });
+
+
+
+  axios.get(`${baseUrl}/category/`)
+    .then((response) => {
+      const category = response.data
+      console.log("category get");
+
+      axios.get(`${baseUrl}/product/`)
+        .then((response) => {
+          const product = response.data
+          console.log(product);
+          for (i = 0; i < product.length; i++) {
+            const prodlist = product[i];
+            const html = ` 
+             <div class="card" style="margin-top: 2rem;"> 
+               <div class="card-body">
               <li class="list-group-item">
                         <a href="/product/${prodlist.productid}">${prodlist.name}</a>
+                       
                            <p class="card-text">${prodlist.price}</p>
                            <p class="card-text">${prodlist.description}</p>
-                           </li>   
-          //             </div>`)
+                           </li>
+                                    </div>
+                    
+                   
+                      </div>
+                    `
 
-    
-  });
-})
-$("#prod").append (`<div class="card" style="margin-top: 2rem;"> 
-              <li class="list-group-item">
-                        <a href="/product/${prodlist.productid}">${prodlist.name}</a>
-                           <p class="card-text">${prodlist.price}</p>
-                           <p class="card-text">${prodlist.description}</p>
-                           </li>   
-          //             </div>`)
-})
-
-
-  //     })
-
-  //     axios.get(`${baseUrl}/category/${search}`)
-  //     .then((response) => {
-  //       const category = response.data
-  //       category.forEach(category => {
-          // $("#prod").replaceWith(`<div class="card" style="margin-top: 2rem;"> 
-          //     <li class="list-group-item">
-          //               <a href="/product/${prodlist.productid}">${prodlist.name}</a>
-          //                  <p class="card-text">${prodlist.price}</p>
-          //                  <p class="card-text">${prodlist.description}</p>
-          //                  </li>   
-          // //             </div>`
-  //     })
-  //   })
-
-
-  //   axios.get(`${baseUrl}/product/`)
-  //     .then((response) => {
-  //       const product = response.data
-  //       console.log("product get");
-
-  //       product.forEach(product => {
-  //         $("#typeO").append(`<option value="${product.productid}">${product.brand}</option>`)
-  //       })
-  //       for (i = 0; i < product.length; i++) {
-  //         const prodlist = product[i];
-  //         const html = ` 
-  //            <div class="card" style="margin-top: 2rem;"> 
-  //             <li class="list-group-item">
-  //                       <a href="/product/${prodlist.productid}">${prodlist.name}</a>
-  //                          <p class="card-text">${prodlist.price}</p>
-  //                          <p class="card-text">${prodlist.description}</p>
-  //                          </li>   
-  //                     </div>
-  //                   `
-  //         $("#prod").append(html);
-  //       }
-
-
-
-  //     });
-  // });
+              ;
+            $("#prod").append(html);
+          }
+        })
+    })
 
 
 
