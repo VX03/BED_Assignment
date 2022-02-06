@@ -192,7 +192,7 @@ app.post('/product/',isLoggedInMiddleware,  function (req, res) {
     var role=req.decodedToken.role
     console.log("decoded role is"+role)
     if(role!="Admin"){
-      res.send("invalid user product")
+      return res.send("invalid user product")
     }
     
     var name = req.body.name;
@@ -262,7 +262,7 @@ app.post('/product/:id/review',isLoggedInMiddleware,  function (req, res) {
     var role=req.decodedToken.role
     console.log("decoded role is"+role)
     if(role!="Admin"||role!="Customer"){
-      res.send("invalid user review")
+      return res.send("invalid user review")
     }
     
     var productid = JSON.parse(req.params.id);
@@ -308,7 +308,10 @@ app.get("/product/:id/reviews",(req,res,next)=>{
 app.post('/interest/:userid',isLoggedInMiddleware,  function (req, res) {
     var role=req.decodedToken.role
     console.log("decoded role is"+role)
-    
+    if(role!="Admin"||role!="Customer"){
+        return res.send("invalid category interest")
+      }
+
     var userid = req.params.userid;
     var categoryids =req.body.categoryids;
     console.log(categoryids)
@@ -341,8 +344,8 @@ app.post('/interest/:userid',isLoggedInMiddleware,  function (req, res) {
 app.post('/promotion/',isLoggedInMiddleware,  function (req, res) {
   var role=req.decodedToken.role
   console.log("decoded role is"+role)
-  if(role!="Admin"||role!="Customer"){
-    res.send("invalid promotion interest")
+  if(role!="Admin"){
+    return res.send("invalid promotion interest")
   }
   
   
