@@ -161,11 +161,22 @@
   axios.get(`${baseUrl}/product/`)
     .then((response) => {
       const product = response.data
-      var aaray = new Array(0);
+      var aaray = new Array();
       product.forEach(product => {
+          aaray.push(product.brand)
+    })
+    for(var i=0;i<aaray.length;i++){
+        for(var n=0;n<i;n++){
+        if(aaray[n]===aaray[i]){
+            aaray.splice(i,1)
+        }
+    }
+    }
+    for(var i=0;i<aaray.length;i++){
+        $("#typeO").append(`<option value="${aaray[i]}">${aaray[i]}</option>`)
 
-        $("#typeO").append(`<option value="${product.brand}">${product.brand}</option>`)
 
+    }
         $("select.typeform").change(function () {
 
           var select = $(this).children("option:selected").val()
@@ -196,7 +207,8 @@
 
             })
         })
-      })
+    
+      
     });
 
 
